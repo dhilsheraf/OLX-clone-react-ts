@@ -1,4 +1,3 @@
-import React from 'react'
 import guitar from '../assets/guitar.png'
 import goolge from '../assets/google.png'
 import phone from '../assets/phone.png'
