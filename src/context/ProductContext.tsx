@@ -1,60 +1,40 @@
-// src/context/ProductContext.tsx
-import React, { createContext, useState, useContext } from 'react';
+// context/ProductContext.tsx
+import { createContext, useContext, useState, ReactNode } from "react";
 
-interface ProductData {
-  category: string;
-  brand?: string;
-  year?: string;
-  owner?: string;
-  bhk?: string;
-  bathroom?: string;
-  title: string;
-  description: string;
-  price: string;
-  location: string;
-  images: { url: string; publicId: string }[];
-}
+type Product = {
+    id: number;
+    title: string;
+    price: number;
+    description: string;
+    category: string;
+    image: string;
+  };
 
-interface ProductContextType {
-  productData: ProductData;
-  setProductData: React.Dispatch<React.SetStateAction<ProductData>>;
-  resetProductData: () => void;
-}
+type ProductContextType = {
+  productData: Product | null;
+  setProductData: (product: Product) => void; 
+};
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
-export const ProductProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  const [productData, setProductData] = useState<ProductData>({
-    category: '',
-    title: '',
-    description: '',
-    price: '',
-    location: '',
-    images: []
-  });
+type ProductProviderProps = {
+  children: ReactNode;
+};
 
-  const resetProductData = () => {
-    setProductData({
-      category: '',
-      title: '',
-      description: '',
-      price: '',
-      location: '',
-      images: []
-    });
-  };
+export const ProductProvider = ({ children }: ProductProviderProps) => {
+  const [productData, setProductData] = useState<Product | null>(null);
 
   return (
-    <ProductContext.Provider value={{ productData, setProductData, resetProductData }}>
+    <ProductContext.Provider value={{ productData, setProductData }}>
       {children}
     </ProductContext.Provider>
   );
 };
 
-export const useProductContext = () => {
+export const useProduct = () => {
   const context = useContext(ProductContext);
-  if (!context) {
-    throw new Error('useProductContext must be used within a ProductProvider');
+  if (context === undefined) {
+    throw new Error("useProduct must be used within a ProductProvider");
   }
   return context;
 };
