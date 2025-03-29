@@ -3,9 +3,11 @@ import Main from "./components/Main";
 import Details from "./components/Details";
 import Sell from "./components/Sell";
 import { ToastContainer } from "react-toastify";
+import { ProductProvider } from "./context/ProductContext";
 
 const App = () => {
   return (<>
+  <ProductProvider>
   <ToastContainer theme="dark"/>
     <Router>  
       <Routes>
@@ -14,6 +16,7 @@ const App = () => {
         <Route path="/sell" element={<Sell/>}/>
       </Routes>
     </Router>
+    </ProductProvider>
     </>
   );
 };
