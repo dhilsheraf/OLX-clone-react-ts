@@ -13,8 +13,6 @@ const Main = () => {
         fetch('https://fakestoreapi.com/products/')
             .then(res=>res.json())
             .then(json=>setProd(json))
-            
-
     } 
 
     useEffect(()=>{
