@@ -15,11 +15,11 @@ type SearchProp = {
 
 const Navbar = ({ setSearch }: SearchProp) => {
   const [loginPop, setLoginPop] = useState(false);
-  const [user, setUser] = useState<any>(null); // Track user state
+  const [user, setUser] = useState<any>(null); 
 
   useEffect(() => {
-    // Listen for authentication changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+
       setUser(currentUser);
     });
 
@@ -29,7 +29,7 @@ const Navbar = ({ setSearch }: SearchProp) => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setUser(null); // Clear user state after logout
+      setUser(null); 
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -77,8 +77,8 @@ const Navbar = ({ setSearch }: SearchProp) => {
           </div>
         )}
         <Link to='/sell'>
-        <div className="w-28 flex h-12 p-2 ml-10 cursor-pointer rounded-full border border-yellow-500">
-          <h1 className="font-bold text-lg ml-3.5">+ SELL</h1>
+        <div className="w-28 flex h-12 p-2 ml-10 cursor-pointer rounded-full border-4 border-yellow-400">
+          <h1 className="font-bold text-lg ml-3.5 ">+ SELL</h1>
         </div>
         </Link>
       </div>

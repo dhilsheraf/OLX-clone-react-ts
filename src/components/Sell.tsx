@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
-import Navbar from "./Navbar";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { auth, db, storage } from "../firebase/setup"; // Make sure storage is exported from your setup file
+import { toast } from "react-toastify";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+
 
 interface Listing {
   id: number;
@@ -13,6 +20,26 @@ interface Listing {
 }
 
 const Sell: React.FC = () => {
+
+    const [user, setUser] = useState<any>(null);
+    const Navigate = useNavigate()
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            console.log("Current User:", currentUser);
+            if (!currentUser) {
+                Navigate('/')
+                toast.error("Please login first"); 
+            } else {
+                setUser(currentUser);
+            }
+        });
+    
+        return () => unsubscribe();
+    }, [Navigate]);
+    
+    
+
   const [listings, setListings] = useState<Listing[]>([]);
   const [formData, setFormData] = useState<Omit<Listing, "id">>({
     title: "",

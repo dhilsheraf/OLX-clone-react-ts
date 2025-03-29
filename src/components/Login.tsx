@@ -13,6 +13,7 @@ const Login = ({ setLoginPop }: PopupProp) => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
+      console.log(auth,provider)
       setLoginPop(false); 
     } catch (error) {
       console.error("Login error:", error);
